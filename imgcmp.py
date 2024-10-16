@@ -50,21 +50,50 @@ def preprocess(img: str):
     image = im.open(img)
     A = np.array(image, dtype=float) / 255.0
     A = np.dot(A, [0.2989, 0.5870, 0.1140])
-    plt.imshow(A)
-    plt.axis('off')  # Turn off axis labels
-    plt.show()
+    # plt.imshow(A)
+    # plt.axis('off')  # Turn off axis labels
+    # plt.show()
     return A
 
 def compress(rank: int, image: np.array):
-    u,s,v = svd(image)
-    print (u.shape)
-    print (s.shape)
-    print (v.shape)
+
+
+    u,s,v = np.linalg.svd(image, full_matrices=False)
+    s = np.diag(s)
+    a = np.dot(u, np.dot(s,v))
+    a = np.real(a)
+
+   
+
+    udash = u[:, :rank]
+    sdash = s[:rank, :rank]
+    vdash = v[:rank, :]
+    compressed_image = np.dot(udash, np.dot(sdash, vdash))
+    compressed_image = np.real(compressed_image)
+    plt.imshow(compressed_image)
+    plt.axis('off')  # Turn off axis labels
+    plt.show()
+
+    return compressed_image
+
+def fnorm(matrix: np.array, img: np.array):
+    # Calculate the difference between the matrices
+    diff = matrix - img
+    
+    # Compute the Frobenius norm using numpy operations
+    norm = np.sqrt(np.sum(np.square(diff)))
+    
+    return norm
 
 def main():
-    # dir()
     A = preprocess('tj.jpg')
-    compress(100, A)
+    ranks =[50, 100, 150, 200, 250, 300, 350, 400]
+    fnorms=[]
+    for r in ranks:
+        img = compress(r, A)
+        fnorms.append(fnorm(A, img))
+    print (f"Fnorms: ", fnorms)
+
 
 if __name__ =="__main__":
     main()
