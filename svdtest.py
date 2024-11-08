@@ -1,7 +1,7 @@
 import numpy as np
 
-matrix = np.matrix('1, 2, 1, 0; 2, 3, 10, 4; 1, 10, 1, 3; 0, 4, 3, 0')
-print(np.linalg.matrix_rank(matrix))
+matrix = np.matrix('100, 0; 0, 1')
+# print(np.linalg.matrix_rank(matrix))
 # mt = matrix.T
 # vals, vecs = (np.linalg.eig(mt@matrix))
 

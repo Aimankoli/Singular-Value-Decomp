@@ -11,7 +11,8 @@ def svd(m: np.matrix):
 
     eigvals_v, v = np.linalg.eig(m_tm)
 
-    idx_u = np.argsort(eigvals_u)[::-1]  # Sort in descending order
+    idx_u = np.argsort(eigvals_u)[::-1]  
+    # Sort in descending order
     idx_v = np.argsort(eigvals_v)[::-1]  
 
     u = u[:, idx_u]
@@ -39,9 +40,11 @@ def svd(m: np.matrix):
     return u, sigma_matrix, v_t
 
 def main():
-    m = np.matrix('1, 2, 1, 0; 2, 3, 10, 4; 1, 10, 1, 3; 0, 4, 3, 0')
+    m = np.matrix('1, 0, 5; 3, 4, 15; 5, 6, 25; 7, 8, 35')
     u, s, v_t = svd(m)
     
+    print (m)
+    print("\n")
     print("U:\n", u)
     print("S:\n", s)
     print("V^T:\n", v_t)

@@ -50,9 +50,9 @@ def preprocess(img: str):
     image = im.open(img)
     A = np.array(image, dtype=float) / 255.0
     A = np.dot(A, [0.2989, 0.5870, 0.1140])
-    # plt.imshow(A)
-    # plt.axis('off')  # Turn off axis labels
-    # plt.show()
+    plt.imshow(A)
+    plt.axis('off')  # Turn off axis labels
+    plt.show()
     return A
 
 def compress(rank: int, image: np.array):
@@ -87,7 +87,9 @@ def fnorm(matrix: np.array, img: np.array):
 
 def main():
     A = preprocess('tj.jpg')
-    ranks =[50, 100, 150, 200, 250, 300, 350, 400]
+    
+    ranks =[300]
+    print(A)
     fnorms=[]
     for r in ranks:
         img = compress(r, A)
